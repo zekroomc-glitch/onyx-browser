@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onyx Browser - Official Website</title>
+    <style>
+        :root {
+            --bg-color: #0b0b0b;
+            --panel-bg: #141414;
+            --border-color: #2b2b2b;
+            --text-color: #ffffff;
+            --text-dim: #777777;
+            --accent: #ffffff;
+            --accent-hover: #cccccc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* الخلفية المتحركة المماثلة لستايل المتصفح */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1a 100%);
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            animation: float 15s infinite linear;
+        }
+
+        .circle:nth-child(1) { width: 450px; height: 450px; top: -100px; left: -100px; animation-duration: 25s; }
+        .circle:nth-child(2) { width: 650px; height: 650px; bottom: -150px; right: -150px; animation-duration: 35s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-30px) rotate(180deg) scale(1.05); }
+            100% { transform: translateY(0) rotate(360deg) scale(1); }
+        }
+
+        /* الهيدر */
+        header {
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+        }
+        .brand span { color: var(--text-dim); }
+
+        /* المحتوى الرئيسي للموقع */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        }
+        .hero h1 span { color: var(--text-dim); }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* زر التحميل الرئيسي */
+        .download-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .download-btn {
+            background: var(--accent);
+            color: var(--bg-color);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, opacity 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+            opacity: 0.95;
+        }
+
+        .system-req {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* عداد التحميلات */
+        .counter-box {
+            margin-top: 30px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            color: var(--text-dim);
+        }
+
+        .counter-box span {
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        /* الفوتر */
+        footer {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            background: rgba(20, 20, 20, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <header>
+        <div class="brand">ONYX <span>BROWSER</span></div>
+    </header>
+
+    <div class="hero">
+        <h1>ON<span>YX</span></h1>
+        <p>The next-generation lightning-fast, ultra-secure browser designed with a minimalist aesthetic and dynamic fluid tabs built for performance.</p>
+        
+        <div class="download-container">
+            <a href="Onyx_Project.zip" class="download-btn" onclick="incrementDownloads()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+    Download for Windows
+</a>
+            <span class="system-req">Requires Windows 10 / 11 (64-bit)</span>
+        </div>
+
+        <div class="counter-box">
+            Total Downloads: <span id="downloadCount">1,428</span>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Onyx Browser. All rights reserved.
+    </footer>
+
+    <script>
+        // محاكاة عداد التحميلات الديناميكي وحفظه في ذاكرة المتصفح
+        let count = localStorage.getItem('onyx_downloads') ? parseInt(localStorage.getItem('onyx_downloads')) : 1428;
+        document.getElementById('downloadCount').innerText = count.toLocaleString();
+
+        function incrementDownloads() {
+            count++;
+            localStorage.setItem('onyx_downloads', count);
+            document.getElementById('downloadCount').innerText = count.toLocaleString();
+        }
+    </script>
+</body>
+</html>
