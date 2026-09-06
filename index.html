@@ -9,6 +9,7 @@
         :root {
             --bg-color: #0b0b0b;
             --panel-bg: #141414;
+            --card-bg: #181818;
             --border-color: #2b2b2b;
             --text-color: #ffffff;
             --text-dim: #777777;
@@ -21,7 +22,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: color 0.3s, background-color 0.3s;
+            transition: color 0.3s, background-color 0.3s, transform 0.2s;
         }
 
         body {
@@ -36,7 +37,7 @@
             position: relative;
         }
 
-        /* الخلفية المتحركة المماثلة لستايل المتصفح */
+        /* الخلفية المتحركة */
         .bg-animation {
             position: absolute;
             top: 0;
@@ -64,7 +65,7 @@
             100% { transform: translateY(0) rotate(360deg) scale(1); }
         }
 
-        /* الهيدر */
+        /* الهيدر مع اللوجو */
         header {
             width: 100%;
             padding: 20px 50px;
@@ -74,6 +75,33 @@
             border-bottom: 1px solid var(--border-color);
             background: rgba(20, 20, 20, 0.8);
             backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* تصميم أيقونة اللوجو الاحترافية */
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #ffffff, #555555);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #0b0b0b;
         }
 
         .brand {
@@ -83,7 +111,7 @@
         }
         .brand span { color: var(--text-dim); }
 
-        /* المحتوى الرئيسي للموقع */
+        /* المحتوى الرئيسي */
         .hero {
             flex: 1;
             display: flex;
@@ -91,8 +119,8 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 40px 20px;
-            max-width: 800px;
+            padding: 50px 20px;
+            max-width: 1000px;
         }
 
         .hero h1 {
@@ -106,16 +134,18 @@
         .hero p {
             font-size: 1.2rem;
             color: var(--text-dim);
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             line-height: 1.6;
+            max-width: 750px;
         }
 
-        /* زر التحميل الرئيسي */
+        /* زر التحميل */
         .download-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
+            margin-bottom: 25px;
         }
 
         .download-btn {
@@ -148,18 +178,74 @@
 
         /* عداد التحميلات */
         .counter-box {
-            margin-top: 30px;
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
-            padding: 12px 25px;
+            padding: 10px 22px;
             border-radius: 30px;
             font-size: 0.95rem;
             color: var(--text-dim);
+            margin-bottom: 60px;
         }
 
         .counter-box span {
             color: var(--text-color);
             font-weight: bold;
+        }
+
+        /* قسم المميزات (3 مربعات) */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            padding: 0 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            border-color: #555555;
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #ffffff;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+            margin: 0;
         }
 
         /* الفوتر */
@@ -172,6 +258,12 @@
             border-top: 1px solid var(--border-color);
             background: rgba(20, 20, 20, 0.8);
         }
+
+        /* تجاوب الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            header { padding: 15px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -182,12 +274,18 @@
     </div>
 
     <header>
-        <div class="brand">ONYX <span>BROWSER</span></div>
+        <div class="brand-container">
+            <!-- أيقونة اللوجو -->
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="brand">ONYX <span>BROWSER</span></div>
+        </div>
     </header>
 
     <div class="hero">
         <h1>ON<span>YX</span></h1>
-        <p>The next-generation lightning-fast, ultra-secure browser designed with a minimalist aesthetic and dynamic fluid tabs built for performance.</p>
+        <p>The next-generation lightning-fast, ultra-secure browser designed with a minimalist aesthetic and dynamic fluid tabs built for peak performance.</p>
         
         <div class="download-container">
             <a href="Onyx_Project.zip" class="download-btn" onclick="incrementDownloads()">
@@ -200,6 +298,33 @@
         <div class="counter-box">
             Total Downloads: <span id="downloadCount">1,500</span>
         </div>
+
+        <!-- 3 مربعات للمميزات التفصيلية -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <h3>Lightning Fast</h3>
+                <p>Engineered for maximum speed and minimal resource consumption, allowing you to browse faster without lagging your PC.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3>Ultra Secure</h3>
+                <p>Built-in advanced privacy protections and tracking blockers to keep your personal data completely safe from prying eyes.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </div>
+                <h3>Customizable UI</h3>
+                <p>Tailor your browsing experience with dynamic fluid tabs, sleek minimalist themes, and full control over your layout.</p>
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -207,39 +332,35 @@
     </footer>
 
     <script>
-        // إعداد العداد ليحيى ويبدأ من 1500
+        // نظام العداد التلقائي
         let count = localStorage.getItem('onyx_downloads_v2') ? parseInt(localStorage.getItem('onyx_downloads_v2')) : 1500;
         let lastTime = localStorage.getItem('onyx_last_time') ? parseInt(localStorage.getItem('onyx_last_time')) : Date.now();
 
-        // حساب الوقت الفائت لزيادة العداد حتى لو أغلق الزائر الموقع ورجع بعد فترة
         let currentTime = Date.now();
         let hoursPassed = (currentTime - lastTime) / (1000 * 60 * 60);
-        
-        // زيادة شخصين كل ساعة (يعني شخص واحد كل 30 دقيقة = زيادة بمعدل 2 في الساعة)
         let additions = Math.floor(hoursPassed * 2);
+        
         if (additions > 0) {
             count += additions;
-            lastTime += additions * (1000 * 60 * 30); // تحديث الوقت بناءً على الزيادة
+            lastTime += additions * (1000 * 60 * 30);
             localStorage.setItem('onyx_downloads_v2', count);
             localStorage.setItem('onyx_last_time', lastTime);
         }
 
         document.getElementById('downloadCount').innerText = count.toLocaleString();
 
-        // زيادة التحميلات فوراً عند الضغط على زر التحميل يدوياً
         function incrementDownloads() {
             count++;
             localStorage.setItem('onyx_downloads_v2', count);
             document.getElementById('downloadCount').innerText = count.toLocaleString();
         }
 
-        // زيادة شخص تلقائياً كل نصف ساعة (30 دقيقة) طالما الموقع مفتوح أمام المستخدم
         setInterval(function() {
             count++;
             localStorage.setItem('onyx_downloads_v2', count);
             localStorage.setItem('onyx_last_time', Date.now());
             document.getElementById('downloadCount').innerText = count.toLocaleString();
-        }, 30 * 60 * 1000); // 30 دقيقة بالميلي ثانية
+        }, 30 * 60 * 1000);
     </script>
 </body>
 </html>
