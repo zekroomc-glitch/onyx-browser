@@ -191,14 +191,14 @@
         
         <div class="download-container">
             <a href="Onyx_Project.zip" class="download-btn" onclick="incrementDownloads()">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-    Download for Windows
-</a>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download for Windows
+            </a>
             <span class="system-req">Requires Windows 10 / 11 (64-bit)</span>
         </div>
 
         <div class="counter-box">
-            Total Downloads: <span id="downloadCount">1,428</span>
+            Total Downloads: <span id="downloadCount">1,500</span>
         </div>
     </div>
 
@@ -207,15 +207,39 @@
     </footer>
 
     <script>
-        // محاكاة عداد التحميلات الديناميكي وحفظه في ذاكرة المتصفح
-        let count = localStorage.getItem('onyx_downloads') ? parseInt(localStorage.getItem('onyx_downloads')) : 1428;
+        // إعداد العداد ليحيى ويبدأ من 1500
+        let count = localStorage.getItem('onyx_downloads_v2') ? parseInt(localStorage.getItem('onyx_downloads_v2')) : 1500;
+        let lastTime = localStorage.getItem('onyx_last_time') ? parseInt(localStorage.getItem('onyx_last_time')) : Date.now();
+
+        // حساب الوقت الفائت لزيادة العداد حتى لو أغلق الزائر الموقع ورجع بعد فترة
+        let currentTime = Date.now();
+        let hoursPassed = (currentTime - lastTime) / (1000 * 60 * 60);
+        
+        // زيادة شخصين كل ساعة (يعني شخص واحد كل 30 دقيقة = زيادة بمعدل 2 في الساعة)
+        let additions = Math.floor(hoursPassed * 2);
+        if (additions > 0) {
+            count += additions;
+            lastTime += additions * (1000 * 60 * 30); // تحديث الوقت بناءً على الزيادة
+            localStorage.setItem('onyx_downloads_v2', count);
+            localStorage.setItem('onyx_last_time', lastTime);
+        }
+
         document.getElementById('downloadCount').innerText = count.toLocaleString();
 
+        // زيادة التحميلات فوراً عند الضغط على زر التحميل يدوياً
         function incrementDownloads() {
             count++;
-            localStorage.setItem('onyx_downloads', count);
+            localStorage.setItem('onyx_downloads_v2', count);
             document.getElementById('downloadCount').innerText = count.toLocaleString();
         }
+
+        // زيادة شخص تلقائياً كل نصف ساعة (30 دقيقة) طالما الموقع مفتوح أمام المستخدم
+        setInterval(function() {
+            count++;
+            localStorage.setItem('onyx_downloads_v2', count);
+            localStorage.setItem('onyx_last_time', Date.now());
+            document.getElementById('downloadCount').innerText = count.toLocaleString();
+        }, 30 * 60 * 1000); // 30 دقيقة بالميلي ثانية
     </script>
 </body>
 </html>
